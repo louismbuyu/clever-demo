@@ -21,6 +21,7 @@ if (!dev) {
 }
 
 app.get("/", (req, res) => {
+    console.log("HIIIT");
     return res.send({message: "Hello World this is it!!! 2222 insane fast jhjkhhj"});
 });
 
