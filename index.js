@@ -1,12 +1,14 @@
 const express = require("express");
-const redirectHttps = require("redirect-https");
 const app = express();
 
-const redirector = redirectHttps({
-    body: "<!-- Hello Developer! Please use HTTPS instead: {{ URL }} -->"
-});
+const requireHTTPS = (req, res, next) => {
+    if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
+        return res.redirect('https://' + req.get('host') + req.url);
+    }
+    next();
+};
 
-app.use("/", redirector);
+app.use(requireHTTPS);
 
 app.get("/", (req, res) => {
     return res.send({message: "Hello World this is it!!! 2222 insane fast jhjkhhj"});
